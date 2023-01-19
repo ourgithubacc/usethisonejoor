@@ -1,0 +1,72 @@
+{
+  "name": "busa_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "build": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^7.4.0",
+    "apns": "^0.1.0",
+    "axios": "^0.27.2",
+    "blob": "^0.1.0",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.33.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.6.0",
+    "ejs": "^3.1.5",
+    "events": "^3.3.0",
+    "expo": "~46.0.9",
+    "expo-barcode-scanner": "^11.4.0",
+    "expo-status-bar": "~1.4.0",
+    "express": "^4.17.1",
+    "express-form-data": "^2.0.18",
+    "express-validator": "^6.2.0",
+    "fcm-node": "^1.6.1",
+    "file-system": "^2.2.2",
+    "firebase-tools": "^11.7.0",
+    "formidable": "^1.2.1",
+    "graceful-fs": "^4.2.10",
+    "heroku": "^7.66.4",
+    "http-server": "^14.1.1",
+    "https": "^1.0.0",
+    "i": "^0.3.6",
+    "image-to-base64": "^2.2.0",
+    "image-to-blob": "^0.2.0",
+    "jquery": "^3.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "mongoose": "^5.13.15",
+    "multer": "^1.4.5-lts.1",
+    "ngrok": "^4.3.3",
+    "node-fetch": "^3.2.10",
+    "node-gcm": "^1.0.5",
+    "nodemailer": "^6.8.0",
+    "nodemon": "^1.19.4",
+    "npm": "^6.13.0",
+    "paystack": "^2.0.1",
+    "paystack-api": "^2.0.6",
+    "qrcode": "^1.5.1",
+    "react": "18.0.0",
+    "react-native": "0.69.5",
+    "regex": "^0.1.1",
+    "restify": "^10.0.0",
+    "url": "^0.11.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  }
+}
