@@ -15,6 +15,7 @@ const {
   getUserByName,
   updateSocial,
 } = require("../controllers/user");
+const {sendFeedBack} = require('../controllers/feedback')
 const router = express();
 
 
@@ -37,6 +38,7 @@ router.delete(
   isAuthenticated,*/
   deleteUser
 );
+router.post('/sendFeedback',sendFeedBack)
 
 // Contact us email
 //router.post("/sendemail", /*apiAuth,*/ contactEmail);
