@@ -8,7 +8,7 @@ const newsSchema = mongoose.Schema({
         type: String
     },
     url:{
-        type:String
+        type:Object
     },
     newsImage:{
         type: String,
