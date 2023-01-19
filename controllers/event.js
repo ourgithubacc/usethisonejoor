@@ -9,7 +9,7 @@ const fs = require('fs')
 //const Imagetobase64 = require('image-to-base64')
 exports.uploadEvent = async (req,res,next) =>{
     try {
-        const {title, description, addedAt,host, campus, ticketPrice} = req.body;
+        const {title, description, addedAt,host, campus, ticketPrice, venue, time} = req.body;
         upload.array('eventImage') 
         const uploader = async (path) => await cloudinary.uploads(path,'Images')
 
@@ -17,8 +17,10 @@ exports.uploadEvent = async (req,res,next) =>{
           const urls = []
       
           const files = req.files.eventImage
-      
-      
+            let url;
+
+        if(files.length > 1) {
+            
           for(const file of files){
             const { path } = file
       
@@ -31,9 +33,18 @@ exports.uploadEvent = async (req,res,next) =>{
             fs.unlinkSync(path)
           }
 
+        } else {
+            const { path } = req.files.eventImage
+          
+          
+            const newPath = await uploader(path)
+      
+            url = newPath
+        }
+      
 
         const event = await new Event({
-            title, description,campus,ticketPrice, host, addedAt, data: urls,addedAt: Date.now()
+            title, description,campus,ticketPrice, host, venue,addedAt,time, data: urls,data: url,maddedAt: Date.now()
         }).save();
 
         if(event) {
