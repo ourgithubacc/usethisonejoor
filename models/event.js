@@ -29,12 +29,30 @@ const eventSchema = mongoose.Schema({
         required: true
     },
     ticketPrice: {
-        type: Number
+        type: String,
+        trim: true,
+        required: true
     },
     data:{
     type: Array,
-    trim: true
+    trim: true,
+    required: true
+    },
+    venue:{
+        type: String,
+        required: true,
+        trim: true
+    },
+    time:{
+        type: String,
+        trim: true,
+        required: true
+    },
+    url:{
+        type:Object
     }
+
+
     
 })
 
