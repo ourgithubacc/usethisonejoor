@@ -6,32 +6,50 @@ const fs = require('fs')
 
 
 //@desc -> add news
-
 exports.addNews = async (req, res) =>{
     try {
         upload.array('newsImage') 
         const uploader = async (path) => await cloudinary.uploads(path,'Images')
 
         if(req.method === 'POST'){
-          const urls = []
+         
+            const urls = []
+            let url;
       
-          const files = req.files.newsImage
-      
-      
-          for(const file of files){
-            const { path } = file
-      
-      
+            const files = req.files.newsImage
+        if (files.length > 1){
+           
+        
+              console.log(files.length)
+  
+            for(const file of files){
+                const { path } = file
+          
+          
+                const newPath = await uploader(path)
+          
+          
+                urls.push(newPath)
+          
+                fs.unlinkSync(path)
+              }
+        } else{
+            
+            const { path } = req.files.newsImage
+          
+          
             const newPath = await uploader(path)
       
+            url = newPath
+            
+            //urls.push(newPath)
       
-            urls.push(newPath)
-      
-            fs.unlinkSync(path)
-          }
+            //fs.unlinkSync(path)
+        }
+         
           const {title,category, campus} = req.body;
           const news = await new News({
-            title, category, campus, data: urls, addedAt: Date.now()
+            title, category, campus, data: urls , data: url, addedAt: Date.now()
         }).save();
       
         if(news) {
@@ -55,7 +73,6 @@ exports.addNews = async (req, res) =>{
         })
     }
 }
-
 //@desc fetch all news
 
 exports.getAllNews = async (req,res,next) =>{
