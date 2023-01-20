@@ -10,10 +10,10 @@ const newsSchema = mongoose.Schema({
     url:{
         type:Object
     },
-    newsImage:{
-        type: String,
+//     newsImage:{
+//         type: String,
        
-    },
+//     },
     category:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
