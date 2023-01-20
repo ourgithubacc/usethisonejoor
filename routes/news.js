@@ -22,7 +22,7 @@ const {
   const upload = require('../controllers/multer')
 // middleware to be here
 
-router.route('/addNews',upload.array('newsImage') /*isSignedIn, isAuthenticated, isVerified, isAdmin*/).post(addNews);
+router.route('/addNews',upload.array('url') /*isSignedIn, isAuthenticated, isVerified, isAdmin*/).post(addNews);
 router.route('/getAllNews/:pageNo/:pageSize', /*isAdmin*/).get(getAllNews)
 router.route('/getMainCampusNews').get(getMainCampusNews)
 router.route('/getIperuCampusNews').get(getIperuCampusNews)
