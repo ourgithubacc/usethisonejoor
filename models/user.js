@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
    },
    campus:{
     type: String,
-    required: true,
+    //required: true,
    },
     email: {
       type: String,
