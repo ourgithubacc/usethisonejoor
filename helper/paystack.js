@@ -9,23 +9,36 @@ require('dotenv').config()
 
 async function initEventPay(req,res){
     try{    
-        const user = await User.findById(req.params.userId)
-        const event = await Event.findById(req.params.eventId)
+
+        const {email, title} = req.body
+
         
-       
+        const user = await User.findOne({email:email},(err,email)=>{
+            if(err|| !email){
+                console.log(err);
+                return res.status(403).json({
+                    error:err
+                })
+            }
+        })
+        const event = await Event.findOne({title:title},(err,title)=>{
+            if(err || !title){
+                console.log(err);
+                return res.status(403).json({
+                    error: err
+                })
+            }
+        })
+        
+        
 
-        //const customerid = req.params.userId;
 
+        
         const amountinkobo = event.ticketPrice;
-            if(isNaN(amountinkobo) || (amountinkobo < 2500)){
-            amountinkobo = 2500;
-        }
-
-        const email = user.email;
         let reference;
 
             paystack.transaction.initialize({
-                email:     email,        // a valid email address
+                email:     user.email,        // a valid email address
                 amount:    amountinkobo, // only kobo and must be integer
                 metadata:  {
                     "pay_for": "ticket"
