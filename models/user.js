@@ -9,28 +9,28 @@ const userSchema = new mongoose.Schema(
   {
     firstname: {
       type: String,
-      required: true,
+      //required: true,
       maxlength: 32,
       trim: true,
     },
     lastname: {
       type: String,
-      required: true,
+      //required: true,
       maxlength: 32,
       trim: true,
     },
    course:{
     type: String,
-    required: true,
+    //required: true,
     trim:true
    },
    level:{
     type: Number,
-    required: true,
+    //required: true,
    },
    gender:{
     type: String,
-    required: true
+    //required: true
    },
    campus:{
     type: String,
