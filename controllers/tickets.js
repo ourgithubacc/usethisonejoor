@@ -3,6 +3,8 @@ const Token = require('../models/token')
 const moment = require('moment');
 const Ticket = require('../models/tickets')
 const {sendEmail} = require('../helper/sendEmail')
+const User = require('../models/user')
+const Event = require('../models/event')
 
 
 exports.getAllTickets = async(req,res) =>{
@@ -48,6 +50,30 @@ exports.getTicketByToken = async (req,res) =>{
     })
 }
 
+exports.verifyPassWordForTicket = async (req,res,next) =>{
+  try {
+    const {email, password} = req.body
+  await User.findOne({email}, (err, user) => {
+    if(err || !user) {
+      return res.status(400).json({
+        error: "Email does not exists"
+      })
+    }
+
+    if(!user.authenticate(password)) {
+      return res.status(401).json({
+        error: "Email and password does not match"
+      })
+    }
+  })
+
+  next()
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 exports.mailTempToken = async (req,res) =>{
   try{
     const {email} = req.body
@@ -69,9 +95,68 @@ exports.mailTempToken = async (req,res) =>{
   })
   } catch(error){
     console.log(error)
+    res.status(500).json({
+      success: false,
+      message:'Internal Error Occured'
+    })
   }
 }
 
+exports.scan = async(req,res, next) =>{
+  try {
+    const {token, eventTitle} = req.body
+
+
+    const event = Event.findOne({title:eventTitle},(err,eventTitle)=>{
+      if(err || !eventTitle){
+        res.status(400).json({
+          success: false,
+          message: "Wrong Event Title"
+        })
+      }
+    })
+
+
+    let check = await Ticket.findOne({
+      token: token
+    })
+
+
+    if(!check && !check.event.title === eventTitle){
+      res.status(400).json({
+        success: false
+      })
+    } else if(check && check.event.title === eventTitle){
+      res.status(200).json({
+        success: true
+      })
+
+      await Ticket.findByIdAndDelete(check._id)
+
+      await Token.findOneAndDelete(token)
+    }
+
+  // let check = await Token.findOne({
+  //   token: token,
+  // });
+  // console.log(check);
+  // if(!check){
+  //   res.status(400).json({
+  //     message: "Token not found in the Database"
+  //   })
+  // }
+
+  // if(check.expiryDate < new Date()){
+  //   res.status(400).json({
+  //     message:"Token expired."
+  //   })
+  // }
+  // await Token.findByIdAndRemove(check._id);
+
+  } catch (error) {
+    console.log(error)
+  }
+}
 exports.getTicketById = async (req,res) =>{
   try{
     const ticket = await Ticket.findById(req.params.ticketId)
