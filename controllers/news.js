@@ -8,7 +8,7 @@ const fs = require('fs')
 //@desc -> add news
 exports.addNews = async (req, res) =>{
     try {
-        upload.array('newsImage') 
+        upload.array('image') 
         const uploader = async (path) => await cloudinary.uploads(path,'Images')
 
         if(req.method === 'POST'){
@@ -16,7 +16,7 @@ exports.addNews = async (req, res) =>{
             const urls = []
             let url;
       
-            const files = req.files.newsImage
+            const files = req.files.image
         if (files.length > 1){
            
         
@@ -35,21 +35,21 @@ exports.addNews = async (req, res) =>{
               }
         } else{
             
-            const { path } = req.files.newsImage
+            const { path } = req.files.image
           
           
             const newPath = await uploader(path)
       
-            url = newPath
+            //url = newPath
             
-            //urls.push(newPath)
+            urls.push(newPath)
       
             //fs.unlinkSync(path)
         }
          
           const {title,category, campus} = req.body;
           const news = await new News({
-            title, category, campus, data: urls , data: url, addedAt: Date.now()
+            title, category, campus, data: urls , addedAt: Date.now()
         }).save();
       
         if(news) {
